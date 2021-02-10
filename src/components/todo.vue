@@ -54,9 +54,9 @@ export default {
 
     deleteTodo (doc) {
       if (this.completed === true) {
-        db.collection('todos')
-          .doc(doc)
-          .delete()
+        setTimeout(() => {
+          db.collection('todos').doc(doc).delete()
+        }, 300)
       }
     }
   }

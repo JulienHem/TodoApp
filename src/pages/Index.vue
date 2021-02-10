@@ -112,7 +112,7 @@ export default {
               displayName: this.userinfos.email
             })
             .then(() => {
-              this.$router.push('/todos')
+              this.$router.push({ name: 'index' })
             })
         })
         .catch((error) => {
