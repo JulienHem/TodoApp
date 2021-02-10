@@ -14,7 +14,6 @@
             <div class="q-pa-sm">
               <q-form @submit.prevent="login">
                 <div v-if="!user">
-
                   <div class="text__connect">Me connecter</div>
                   <p class="text__id">Entrez vos identifiants pour vous connecter</p>
                   <q-input v-model="userinfos.email" class="input__padding" filled type="email" placeholder="Email"/>
@@ -51,7 +50,7 @@
             <div class="auth__box">
               <div>Afin d'accéder à votre Todolist</div>
               <div>merci de bien vouloir vous authentifier.</div>
-              <q-btn :ripple="false" @click="drawerLeft = !drawerLeft" color="secondary" class="auth__button"
+              <q-btn :ripple="false" @click="showHideDrawer" color="secondary" class="auth__button"
                      label="M'AUTHENTIFIER" no-caps/>
             </div>
           </q-page>
@@ -87,12 +86,17 @@ export default {
     })
   },
   methods: {
+    showHideDrawer () {
+      this.drawerLeft = !this.drawerLeft
+    },
     login () {
       firebase
         .auth()
         .signInWithEmailAndPassword(this.userinfos.email, this.userinfos.password)
         .then(() => {
-          // this.$router.push({ name: 'todos' })
+          setTimeout(() => {
+            this.$router.push({ name: 'todos' })
+          }, 1000)
         })
         .catch(error => {
           console.log(error.message)
