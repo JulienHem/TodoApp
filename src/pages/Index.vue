@@ -10,9 +10,11 @@
           :breakpoint="700"
           elevated
         >
-            <q-scroll-area class="fit" v-if="user">
-              <div class="q-pa-sm">
-                <q-form @submit.prevent="login">
+          <q-scroll-area class="fit">
+            <div class="q-pa-sm">
+              <q-form @submit.prevent="login">
+                <div v-if="!user">
+
                   <div class="text__connect">Me connecter</div>
                   <p class="text__id">Entrez vos identifiants pour vous connecter</p>
                   <q-input v-model="userinfos.email" class="input__padding" filled type="email" placeholder="Email"/>
@@ -30,19 +32,20 @@
                          label="ME CONNECTER" no-caps/>
 
                   <p class="create__account" @click="sub()">créer un compte</p>
-                </q-form>
+                </div>
 
-              </div>
-            </q-scroll-area>
-        </q-drawer>
-        <!--        Si l'utilisateur est connecté-->
-          <q-scroll-area class="fit" v-if="user">
-            <div class="q-pa-sm">
-              <div class="text__connect">Bonjour {{ user.email }}</div>
-              <q-btn :ripple="false" color="secondary" class="connect__button" @click="logOut()"
-                     label="ME DECONNECTER" no-caps/>
+                <div v-if="user">
+                  <div class="text__connect">Bonjour {{ user.email }}</div>
+                  <q-btn :ripple="false" color="secondary" class="connect__button" @click="logOut()"
+                         label="ME DECONNECTER" no-caps/>
+                </div>
+
+              </q-form>
             </div>
           </q-scroll-area>
+        </q-drawer>
+        <!--        Si l'utilisateur est connecté-->
+
         <q-page-container>
           <q-page>
             <div class="auth__box">
@@ -89,7 +92,7 @@ export default {
         .auth()
         .signInWithEmailAndPassword(this.userinfos.email, this.userinfos.password)
         .then(() => {
-          this.$router.push({ name: 'todos' })
+          // this.$router.push({ name: 'todos' })
         })
         .catch(error => {
           console.log(error.message)
