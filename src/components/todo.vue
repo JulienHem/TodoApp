@@ -66,11 +66,12 @@ export default {
 <style scoped>
 .list__wrap {
   margin-bottom: 25px;
+  margin-left: 60px;
 }
 
 .checkbox__placement {
   display: flex;
-  justify-content: flex-end;
+  justify-content: right;
 }
 
 .title__wrap {

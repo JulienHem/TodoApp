@@ -1,10 +1,11 @@
 <template>
   <div>
+
     <div class="q-pa-md">
       <div class="cursor-pointer">
-        <q-btn flat round dense v-model="addIcon" color="white" icon="add"
+        <q-btn flat round dense :click="hidden = !hidden" color="white" icon="add"
                style="font-size: 20px; bottom: 40px; background: #26a69a"/>
-        <q-popup-edit v-model="todoContent" :cover="false" :offset="[0, -140]">
+        <q-popup-edit v-model="todoContent" class="input__placement" :cover="false" :offset="[0, -140]">
           <template v-slot="{set}">
             <input type="text" style="color: #26a69a" placeholder="Ajouter un élément" v-model="todo.title">
             <q-input color="white"
@@ -20,7 +21,10 @@
         </q-popup-edit>
       </div>
     </div>
+
     <!--    Calling todo component to pass data-->
+    <div v-if="!todoData.length" class="empty__list">{{ this.emptySpace }}</div>
+
     <todo v-for="item in todoData" :key="item.id" :item="item" :todoData="todoData"></todo>
   </div>
 </template>
@@ -38,8 +42,9 @@ export default {
   },
   data () {
     return {
-      addIcon: false,
+      hidden: true,
       todoContent: '',
+      emptySpace: 'Aucun élément',
       todoData: [],
       todo: {
         title: '',
@@ -49,9 +54,9 @@ export default {
   },
   mounted () {
     this.getData()
-    // Get data from the database
   },
   methods: {
+    // Get data from the database and using onSnapshot to make the delete and add dynamic
     getData () {
       db.collection('todos')
         .onSnapshot(snapshot => {
@@ -90,6 +95,10 @@ export default {
 <style scoped>
 input[type=text] {
   border: none;
+}
+.empty__list{
+  font-size: 20px;
+  text-align: center;
 }
 
 </style>
