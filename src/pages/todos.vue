@@ -1,31 +1,32 @@
 <template>
   <div>
-
-    <div class="q-pa-md">
-      <div class="cursor-pointer">
-        <q-btn flat round dense :click="hidden = !hidden" color="white" icon="add"
-               style="font-size: 20px; bottom: 40px; background: #26a69a"/>
-        <q-popup-edit v-model="todoContent" class="input__placement" :cover="false" :offset="[0, -140]">
-          <template v-slot="{set}">
-            <input type="text" style="color: #26a69a" placeholder="Ajouter un élément" v-model="todo.title">
-            <q-input color="white"
-                     v-model="todo.description"
-                     dense
-                     autofocus>
-              <template v-slot:after>
-                <q-btn flat round dense color="white" icon="add" @click="addTodo" @click.stop="set"
-                       style="font-size: 20px; left: 10px; margin-bottom: 20px; background: #26a69a"/>
-              </template>
-            </q-input>
-          </template>
-        </q-popup-edit>
+    <div class="container">
+      <div class="q-pa-md">
+        <div class="cursor-pointer">
+          <q-btn flat round dense @click="hidden = !hidden" color="white" icon="add"
+                 style="font-size: 20px; bottom: 40px; background: #26a69a"/>
+          <q-popup-edit v-model="todoContent" class="input__placement" :cover="false" :offset="[0, -140]">
+            <template v-slot="{set}">
+              <input type="text" style="color: #26a69a" placeholder="Ajouter un élément" v-model="todo.title">
+              <q-input color="white"
+                       v-model="todo.description"
+                       dense
+                       autofocus>
+                <template v-slot:after>
+                  <q-btn flat round dense color="white" icon="add" @click="addTodo" @click.stop="set"
+                         style="font-size: 20px; left: 10px; margin-bottom: 20px; background: #26a69a"/>
+                </template>
+              </q-input>
+            </template>
+          </q-popup-edit>
+        </div>
       </div>
+
+      <!--    Calling todo component to pass data-->
+      <div v-if="!todoData.length" class="empty__list">{{ this.emptySpace }}</div>
+
+      <todo v-for="item in todoData" :key="item.id" :item="item" :todoData="todoData"></todo>
     </div>
-
-    <!--    Calling todo component to pass data-->
-    <div v-if="!todoData.length" class="empty__list">{{ this.emptySpace }}</div>
-
-    <todo v-for="item in todoData" :key="item.id" :item="item" :todoData="todoData"></todo>
   </div>
 </template>
 
@@ -96,7 +97,8 @@ export default {
 input[type=text] {
   border: none;
 }
-.empty__list{
+
+.empty__list {
   font-size: 20px;
   text-align: center;
 }

@@ -3,9 +3,9 @@
     <div class="list__wrap">
       <div class="title__wrap" @click="showHide()">
         <div class="title__content">
-          <div class="title__content__padding">{{ item.title }}</div>
+          <span class="title">{{ item.title }}</span>
+          <q-checkbox class="checkbox__placement" v-model="completed" :click="deleteTodo(item.id)"/>
         </div>
-        <q-checkbox class="checkbox__placement" v-model="completed" :click="deleteTodo(item.id)"/>
       </div>
       <div v-if="showing">
         <q-input
@@ -64,28 +64,22 @@ export default {
 </script>
 
 <style scoped>
+
 .list__wrap {
   margin-bottom: 25px;
   margin-left: 60px;
 }
-
-.checkbox__placement {
-  display: flex;
-  justify-content: right;
+.title__content {
+  overflow-wrap: break-word;;
+  display: inline-block;
+  padding-left: 10px;
+  max-width: 315px;
+  font-size: 20px;
 }
-
 .title__wrap {
   display: flex;
   flex-direction: row;
   background: grey;
   opacity: 50%;
-}
-
-.title__content {
-  font-size: 20px;
-}
-
-.title__content__padding {
-  padding: 5px 10px 5px 10px;
 }
 </style>

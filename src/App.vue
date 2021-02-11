@@ -15,3 +15,9 @@ export default {
   }
 }
 </script>
+
+<style>
+#q-app{
+  width: auto;
+}
+</style>
