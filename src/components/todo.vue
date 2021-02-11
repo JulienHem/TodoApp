@@ -4,7 +4,7 @@
       <div class="title__wrap" @click="showHide()">
         <div class="title__content">
           <span class="title">{{ item.title }}</span>
-          <q-checkbox class="checkbox__placement" v-model="completed" :click="deleteTodo(item.id)"/>
+          <q-checkbox v-model="completed" :click="deleteTodo(item.id)"/>
         </div>
       </div>
       <div v-if="showing">

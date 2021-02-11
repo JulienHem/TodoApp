@@ -54,31 +54,28 @@ export default {
     }
   },
   mounted () {
-    this.getData()
+    // Get data from the database and using onSnapshot to make the delete and add dynamic
+    db.collection('todos')
+      .onSnapshot(snapshot => {
+        const docs = snapshot.docChanges()
+        docs.forEach(document => {
+          const doc = document.doc
+          const item = doc.data()
+          item.id = doc.id
+
+          if (document.type === 'added') {
+            this.todoData.push({
+              title: this.todo.title,
+              description: this.todo.description,
+              ...item
+            })
+          } else if (document.type === 'removed') {
+            this.todoData = this.todoData.filter(todo => todo.id !== doc.id)
+          }
+        })
+      })
   },
   methods: {
-    // Get data from the database and using onSnapshot to make the delete and add dynamic
-    getData () {
-      db.collection('todos')
-        .onSnapshot(snapshot => {
-          const docs = snapshot.docChanges()
-          docs.forEach(document => {
-            const doc = document.doc
-            const item = doc.data()
-            item.id = doc.id
-
-            if (document.type === 'added') {
-              this.todoData.push({
-                title: this.todo.title,
-                description: this.todo.description,
-                ...item
-              })
-            } else if (document.type === 'removed') {
-              this.todoData = this.todoData.filter(todo => todo.id !== doc.id)
-            }
-          })
-        })
-    },
     // Adding the data to the database
     addTodo () {
       db.collection('todos')
