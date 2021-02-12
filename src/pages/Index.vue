@@ -2,7 +2,6 @@
   <div>
     <div class="q-pa-md q-gutter-y-sm">
       <q-layout>
-        <!--        Si l'utilisateur n'est pas connecté-->
         <q-drawer
           v-model="drawerLeft"
           show-if-above
@@ -13,6 +12,7 @@
           <q-scroll-area class="fit">
             <div class="q-pa-sm">
               <q-form @submit.prevent="login">
+                <!--        Si l'utilisateur n'est pas connecté-->
                 <div v-if="!user">
                   <div class="text__connect">Me connecter</div>
                   <p class="text__id">Entrez vos identifiants pour vous connecter</p>
@@ -44,7 +44,6 @@
           </q-scroll-area>
         </q-drawer>
         <!--        Si l'utilisateur est connecté-->
-
         <q-page-container>
           <q-page>
             <div class="auth__box">
@@ -77,6 +76,7 @@ export default {
     }
   },
   created () {
+    // Can track if a user is connected or not
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.user = user
@@ -89,6 +89,7 @@ export default {
     showHideDrawer () {
       this.drawerLeft = !this.drawerLeft
     },
+    // Connect method
     login () {
       firebase
         .auth()
@@ -102,6 +103,7 @@ export default {
           console.log(error.message)
         })
     },
+    // Sub method
     sub () {
       firebase
         .auth()
@@ -119,11 +121,12 @@ export default {
           console.log(error.message)
         })
     },
+    // Disconnect method
     logOut () {
       firebase.auth()
         .signOut()
         .then(() => {
-          this.$router.push('')
+          this.$router.push({ name: 'index' })
         })
     }
   }

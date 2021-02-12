@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="list__wrap">
-      <div class="title__wrap" @click="showHide()">
+      <div class="title__wrap" @click="showing = !showing">
         <div class="title__content">
           <span class="title">{{ item.title }}</span>
           <q-checkbox v-model="completed" :click="deleteTodo(item.id)"/>
@@ -30,6 +30,7 @@ const db = firebase.firestore()
 
 export default {
   name: 'todo',
+  // Accessing the parent data
   props: ['item',
     'todoData'],
   data () {
@@ -40,14 +41,11 @@ export default {
     }
   },
   methods: {
-    showHide () {
-      this.showing ? this.showing = false : this.showing = true
-    },
-
+    // Edit method for the description of the todo
     editTodo (id) {
       db.collection('todos').doc(id).update({
         description: this.item.description
-      }).then((e) => {
+      }).catch((e) => {
         console.error(e)
       })
     },
@@ -66,9 +64,10 @@ export default {
 <style scoped>
 
 .list__wrap {
-  margin-bottom: 25px;
+  margin-bottom: 20px;
   margin-left: 60px;
 }
+
 .title__content {
   overflow-wrap: break-word;;
   display: inline-block;
@@ -76,6 +75,7 @@ export default {
   max-width: 315px;
   font-size: 20px;
 }
+
 .title__wrap {
   display: flex;
   flex-direction: row;

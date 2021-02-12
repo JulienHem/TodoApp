@@ -3,9 +3,11 @@
     <div class="container">
       <div class="q-pa-md">
         <div class="cursor-pointer">
-          <q-btn flat round dense @click="hidden = !hidden" color="white" icon="add"
+          <div @click="showing = !showing">
+          <q-btn flat round dense v-if="showing" color="white" icon="add"
                  style="font-size: 20px; bottom: 40px; background: #26a69a"/>
-          <q-popup-edit v-model="todoContent" class="input__placement" :cover="false" :offset="[0, -140]">
+          </div>
+          <q-popup-edit v-model="todoContent" class="input__placement" :cover="false" :offset="[0, -95]">
             <template v-slot="{set}">
               <input type="text" style="color: #26a69a" placeholder="Ajouter un élément" v-model="todo.title">
               <q-input color="white"
@@ -43,7 +45,7 @@ export default {
   },
   data () {
     return {
-      hidden: true,
+      showing: true,
       todoContent: '',
       emptySpace: 'Aucun élément',
       todoData: [],
@@ -83,8 +85,10 @@ export default {
           title: this.todo.title,
           description: this.todo.description
         })
+      // Refresh the inputs after adding the data
       this.todo.title = ''
       this.todo.description = ''
+      this.showing = true
     }
   }
 }
