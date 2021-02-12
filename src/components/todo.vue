@@ -69,7 +69,7 @@ export default {
 }
 
 .title__content {
-  overflow-wrap: break-word;;
+  overflow-wrap: break-word;
   display: inline-block;
   padding-left: 10px;
   max-width: 315px;
